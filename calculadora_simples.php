@@ -2,48 +2,41 @@
 	$valor1 = (double) 0;
 	$valor2 = (double) 0;
 	$resultado = (double) 0;
-	$operadores = "";
+	$opcao = (string) null;
 
 	if(isset($_POST['btncalc'])){
 
 		$valor1 = $_POST['txtn1'];
 		$valor2 = $_POST['txtn2'];
-		$operadores = $_POST['rdocalc'];
+		
+		// validação de tratamento de erro para caixa vazia
+		if($_POST['txtn1'] == '' || $_POST['txtn2'] == '')
 
-		if($_POST['txtn1'] == "" || $_POST['txtn2'] == "")
-		{
-			echo('<p class="msgErro">É obrigatório preencher todos os campos para efetuar o seu calculo!</p>');
-		
-		}else{
-		
-		if(!is_numeric($valor1) || !is_numeric($nota2))
-		{
-			echo('<p class="msgErro">Para realizar o calculo, todos os dados devem estar validos!</p>');
+			echo('<script> alert("Preencha todos os campos para que possa realizar o calculo!"); </script>');
 
-		}else{
+		else{
+			// validação de tratamento de erro para rdo sem escolha
+			if(!isset($_POST['rdocalc']))
 
-		$soma = ($valor1 + $valor2);
-		$subtrair = ($valor1 - $valor2);
-		$multiplicar = ($valor1 * $valor2);
-		$dividir = ($valor1 / $valor2);
-		
-		if(strchr($operadores, 'somar')){
-			$resultado = $soma;
-		}else if(strchr($operadores, 'subtrair')){
-			$resultado = $subtrair;
-		}else if(strchr($operadores, 'multiplicar')){
-			$resultado = $multiplicar;
-		}else{
-			$resultado = $dividir;
-		}
-		
+				echo('<script> alert("Por favor escolher uma operação matemática válida!"); </script>');
+
+			else{
+
+				// Apenas podemos receber o valor do rdo quando ele existir
+				$opcao = strtoupper($_POST['rdocalc']);
+
+			// Utilização de chaves seria para blocos de códigos, caso haja apenas uma sentença de código não é necessário usar as chaves;
+			if($opcao == 'SOMAR')
+				$resultado = $valor1 + $valor2;
+			elseif($opcao == 'SUBTRAIR')
+				$resultado = $valor1 - $valor2;
+			elseif($opcao == 'MULTIPLICAR')
+				$resultado = $valor1 * $valor2;
+			elseif($opcao = 'DIVIDIR')
+				$resultado = $valor1 / $valor2;
+			}
 		}
 	}
-
-
-	}
-
-
 
 
 ?>
@@ -67,7 +60,7 @@
 						Valor 1:<input type="text" name="txtn1" value="0" > <br>
 						Valor 2:<input type="text" name="txtn2" value="0" > <br>
 						<div id="container_opcoes">
-							<input type="radio" name="rdocalc" value="somar" checked>Somar <br>
+							<input type="radio" name="rdocalc" value="somar" >Somar <br>
 							<input type="radio" name="rdocalc" value="subtrair" >Subtrair <br>
 							<input type="radio" name="rdocalc" value="multiplicar" >Multiplicar <br>
 							<input type="radio" name="rdocalc" value="dividir" >Dividir <br>
@@ -76,7 +69,7 @@
 							
 						</div>	
 						<div id="resultado">
-						O resultado é: <?php  echo($resultado); ?>
+						O resultado é: <?=$resultado;?>
 						</div>
 						
 					</form>
