@@ -4,6 +4,46 @@
 	$resultado = (double) 0;
 	$opcao = (string) null;
 
+	// Criando uma função para calcular as operações matemáticas  
+	function operacaoMatematica($numero1, $numero2, $operacao){
+
+		// Declaração de variaveis locais da função
+		$num1 = (double) $numero1;
+		$num2 = (double) $numero2;
+		$tipoCalculo = (string) $operacao;
+		$result = (double) 0;
+
+		switch($tipoCalculo) {
+			case 'SOMAR':
+				$result = $num1 + $num2;
+				break;
+
+			case 'SUBTRAIR':
+				$result = $num1 - $num2;
+				break;
+
+			case 'MULTIPLICAR':
+				$result = $num1 * $num2;
+				break;
+
+			case 'DIVIDIR':
+				if($num2 == 0)
+					echo('<script> alert("Não é possível realizar a divisão onde o valor 2 é igual a 0!"); </script>');
+				else
+					$result = $num1 / $num2;
+				
+				break;
+
+			default:
+				// Processamento caso não entre em nenhuma das opções
+			}			
+
+			// round() - permite limitar a qtde de casas decimais de um valor, além de arredondar o valor quando necessário
+			$result = round($result, 2);
+
+		return $result;
+	}
+
 
 	if(isset($_POST['btncalc'])){
 
@@ -34,36 +74,10 @@
 					// Apenas podemos receber o valor do rdo quando ele existir
 						$opcao = strtoupper($_POST['rdocalc']);
 
-					// Utilização de chaves seria para blocos de códigos, caso haja apenas uma sentença de código não é necessário usar as chaves;
-
-					switch($opcao) {
-						case 'SOMAR':
-							$resultado = $valor1 + $valor2;
-							break;
-
-						case 'SUBTRAIR':
-							$resultado = $valor1 - $valor2;
-							break;
-
-						case 'MULTIPLICAR':
-							$resultado = $valor1 * $valor2;
-							break;
-
-						case 'DIVIDIR':
-							if($valor2 == 0)
-								echo('<script> alert("Não é possível realizar a divisão onde o valor 2 é igual a 0!"); </script>');
-							else
-								$resultado = $valor1 / $valor2;
-							
-							break;
-
-						default:
-							// Processamento caso não entre em nenhuma das opções
-						}	
+					// Chamada para a função que vai realizar os calculos matemáticos
+					$resultado = operacaoMatematica($valor1, $valor2, $opcao);
+						
 					}
-
-					// round() - permite limitar a qtde de casas decimais de um valor, além de arredondar o valor quando necessário
-					$resultado = round($resultado, 2);
 				}
 			}
 		}

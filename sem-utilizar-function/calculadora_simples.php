@@ -4,7 +4,6 @@
 	$resultado = (double) 0;
 	$opcao = (string) null;
 
-
 	if(isset($_POST['btncalc'])){
 
 		$valor1 = $_POST['txtn1'];
