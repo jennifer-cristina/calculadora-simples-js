@@ -1,49 +1,17 @@
 <?php
+	//permite fazer a importação de arquivos no PHP. 
+	//Utilizando a opção com _once, o servidor realiza uma restrição 
+	//para importar somente uma vez o arquivo (melhor opção).
+
+	//import do arquivo de funções para calculos matemáticos
+	require_once('modulo/calculos.php');
+	//import do arquivo de configurações de variaveis e constantes
+	require_once('modulo/config.php');
+
 	$valor1 = (double) 0;
 	$valor2 = (double) 0;
 	$resultado = (double) 0;
 	$opcao = (string) null;
-
-	// Criando uma função para calcular as operações matemáticas  
-	function operacaoMatematica($numero1, $numero2, $operacao){
-
-		// Declaração de variaveis locais da função
-		$num1 = (double) $numero1;
-		$num2 = (double) $numero2;
-		$tipoCalculo = (string) $operacao;
-		$result = (double) 0;
-
-		switch($tipoCalculo) {
-			case 'SOMAR':
-				$result = $num1 + $num2;
-				break;
-
-			case 'SUBTRAIR':
-				$result = $num1 - $num2;
-				break;
-
-			case 'MULTIPLICAR':
-				$result = $num1 * $num2;
-				break;
-
-			case 'DIVIDIR':
-				if($num2 == 0)
-					echo('<script> alert("Não é possível realizar a divisão onde o valor 2 é igual a 0!"); </script>');
-				else
-					$result = $num1 / $num2;
-				
-				break;
-
-			default:
-				// Processamento caso não entre em nenhuma das opções
-			}			
-
-			// round() - permite limitar a qtde de casas decimais de um valor, além de arredondar o valor quando necessário
-			$result = round($result, 2);
-
-		return $result;
-	}
-
 
 	if(isset($_POST['btncalc'])){
 
@@ -53,13 +21,12 @@
 		// validação de tratamento de erro para caixa vazia
 		if($_POST['txtn1'] == '' || $_POST['txtn2'] == '')
 
-			echo('<script> alert("Preencha todos os campos para que possa realizar o calculo!"); </script>');
-
+			echo(ERRO_MSG_CAIXA_VAZIA);
 		else{
 			// validação de tratamento de erro para rdo sem escolha
 			if(!isset($_POST['rdocalc']))
 
-				echo('<script> alert("Por favor escolher uma operação matemática válida!"); </script>');
+				echo(ERRO_MSG_OPERACAO_CALCULO);
 
 			else{
 
@@ -67,7 +34,7 @@
 
 				if(!is_numeric($valor1) || !is_numeric($valor2))
 
-					echo('<script> alert("Não é possível realizar calculos de dados não númericos!"); </script>');
+					echo(ERRO_MSG_CARACTER_INVALIDO_TEXTO);
 
 				else{
 
